@@ -1,0 +1,41 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    #projects: '$(Build.SourcesDirectory)/src/mtw.investing.v2.blazor/mtw.investing.v2.blazor.csproj'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    #projects: '$(Build.SourcesDirectory)/src/mtw.investing.v2.blazor/mtw.investing.v2.blazor.csproj'
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Windows Azure MSDN - Visual Studio Ultimate(08a3708b-77d2-4e81-ba2e-740a6ae6acd3)'
+    appType: 'webApp'
+    WebAppName: 'mtw-okta-resource-api'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
