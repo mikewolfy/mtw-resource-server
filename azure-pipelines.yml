@@ -24,13 +24,13 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    #projects: '$(Build.SourcesDirectory)/src/mtw.investing.v2.blazor/mtw.investing.v2.blazor.csproj'
+    projects: '$(Build.SourcesDirectory)/src/ResourceServer.csproj'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
     publishWebProjects: false
-    #projects: '$(Build.SourcesDirectory)/src/mtw.investing.v2.blazor/mtw.investing.v2.blazor.csproj'
+    projects: '$(Build.SourcesDirectory)/src/ResourceServer.csproj'
 
 - task: AzureRmWebAppDeployment@4
   inputs:
