@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ResourceServer
+namespace ResourceServer.Services
 {
     public class QuotesService
     {
