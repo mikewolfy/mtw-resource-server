@@ -1,0 +1,11 @@
+# references the parent container on DockerHub
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+
+# copies the output of the Release publish to the /App folder in the container
+COPY bin/Release/netcoreapp3.1/publish/ App/
+
+# sets the current directory in the container to the /App folder
+WORKDIR /App
+
+# sets the starting point
+ENTRYPOINT ["dotnet", "ResourceServer.dll"]
